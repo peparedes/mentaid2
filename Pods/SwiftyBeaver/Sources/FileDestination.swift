@@ -89,11 +89,13 @@ public class FileDestination: BaseDestination {
         do {
             if fileManager.fileExists(atPath: url.path) == false {
                 // create file if not existing
+                //print("aqui 1")
                 let line = str + "\n"
-                try line.write(to: url, atomically: true, encoding: .utf8)
+                try line.write(to: url, atomically: true, encoding: String.Encoding.utf8)
                 
                 #if os(iOS) || os(watchOS)
                 if #available(iOS 10.0, watchOS 3.0, *) {
+                //print("aqui 2")
                     var attributes = try fileManager.attributesOfItem(atPath: url.path)
                     attributes[FileAttributeKey.protectionKey] = FileProtectionType.none
                     try fileManager.setAttributes(attributes, ofItemAtPath: url.path)
@@ -101,6 +103,7 @@ public class FileDestination: BaseDestination {
                 #endif
             } else {
                 // append to end of file
+                //print("aqui 3")
                 if fileHandle == nil {
                     // initial setting of file handle
                     fileHandle = try FileHandle(forWritingTo: url as URL)
